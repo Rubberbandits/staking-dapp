@@ -63,7 +63,7 @@ const GetAllTokens = async (account) => {
 			tokenURI.pathname = path;
 		}
 
-		await fetch("/1.json")
+		await fetch(tokenURI)
 			.then(response => response.json())
 			.then(_data => {
 				tokens.push({
@@ -71,6 +71,15 @@ const GetAllTokens = async (account) => {
 					isStaked: staked_tokens.includes(tokenID),
 					image: _data.image
 				})
+			})
+			.catch(_err => {
+				tokens.push({
+					tokenID: tokenID,
+					isStaked: staked_tokens.includes(tokenID),
+					image: "/nautilus.gif"
+				})
+				
+				console.log("Uh oh, can't fetch token image! "+ tokenID);
 			});
 	}
 
@@ -84,8 +93,12 @@ const CreateTokenDisplays = () => {
 		let token_displays = [];
 		
 		tokens.forEach(_data => {
-			token_displays.push(<TokenDisplay tokenID={_data.tokenID} isStaked={_data.isStaked} imagePath={_data.image} />)
+			token_displays.push(<TokenDisplay tokenID={_data.tokenID} isStaked={_data.isStaked} imagePath={_data.image} />);
 		});
+
+		let tokenList = document.getElementById("tokenList");
+		tokenList.classList.remove("justify-center");
+		tokenList.querySelector("#loading").classList.add("hidden")
 
 		ReactDOM.render(
 			<> 
@@ -209,7 +222,12 @@ export default function TokenContainer()
 {
 	return (
 		<>
-			<div id="tokenList" className="rounded-md bg-base-100 flex flex-row p-2 space-x-3 w-full max-w-5xl overflow-auto mt-2">
+			<div id="tokenList" className="rounded-md bg-base-100 flex flex-row p-2 space-x-3 w-full max-w-5xl overflow-auto mt-2 justify-center">
+				<svg width="20" height="20" fill="currentColor" className="flex mr-2 animate-spin" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" id="loading">
+					<path d="M526 1394q0 53-37.5 90.5t-90.5 37.5q-52 0-90-38t-38-90q0-53 37.5-90.5t90.5-37.5 90.5 37.5 37.5 90.5zm498 206q0 53-37.5 90.5t-90.5 37.5-90.5-37.5-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm-704-704q0 53-37.5 90.5t-90.5 37.5-90.5-37.5-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm1202 498q0 52-38 90t-90 38q-53 0-90.5-37.5t-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm-964-996q0 66-47 113t-113 47-113-47-47-113 47-113 113-47 113 47 47 113zm1170 498q0 53-37.5 90.5t-90.5 37.5-90.5-37.5-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm-640-704q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm530 206q0 93-66 158.5t-158 65.5q-93 0-158.5-65.5t-65.5-158.5q0-92 65.5-158t158.5-66q92 0 158 66t66 158z">
+					</path>
+				</svg>
+				
 				{process.browser && CreateTokenDisplays()}
 			</div>
 
