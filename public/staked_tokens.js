@@ -1,19 +1,45 @@
-const CONTRACT_ADDR = "0xc6fae0881b7531959ccbe09be58c67718b61f163";
-
-async function GetStakedTokens(account) 
+async function DisplayStakingApp(account) 
 {
-	var connectButton = document.getElementById("connectWallet");
-	connectButton.style.display = "none";
+	let is_approved_encoded = await CallContractFunction(CONTRACT_NFT_ADDR, {
+		interface: {
+			name: 'isApprovedForAll',
+			type: 'function',
+			inputs: [
+				{
+					type: "address",
+					name: "owner"
+				},
+				{
+					type: "address",
+					name: "operator"
+				}
+			]
+		},
+		parameters: [account, CONTRACT_STAKE_ADDR]
+	})
 
-	var stakingApp = document.getElementById("stakingApp");
-	stakingApp.style.display = "flex";
+	let is_approved = web3.eth.abi.decodeParameter("bool", is_approved_encoded);
+	if (is_approved !== true) 
+	{
+		var contractNotApproved = document.getElementById("contractNotApproved");
+		contractNotApproved.style.display = "flex";
 
+		var connectButton = document.getElementById("connectWallet");
+		connectButton.style.display = "none";
+	} else {
+		var connectButton = document.getElementById("connectWallet");
+		connectButton.style.display = "none";
+	
+		var stakingApp = document.getElementById("stakingApp");
+		stakingApp.style.display = "flex";
+	}
 
+	ethereum.on('accountsChanged', (accounts) => window.location.reload());
 }
 
-window.addEventListener("walletConnected", async function(account) {
-	if (account !== undefined) 
+window.addEventListener("walletConnected", async function(e) {
+	if (e.detail !== undefined) 
 	{
-		await GetStakedTokens(account);
+		await DisplayStakingApp(e.detail);
 	}
 })

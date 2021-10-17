@@ -8,6 +8,11 @@ import ConnectWallet from '../components/connect_wallet'
 import TokenContainer from '../components/token_container'
 import StakingStats from '../components/staking_stats'
 
+// allow staking contract to manage your tokens
+const AllowStakingApproval = () => {
+
+}
+
 export default function Home() {
   return (
     <div data-theme="nautilus" className="flex flex-col items-center justify-center min-h-screen py-2">
@@ -18,9 +23,34 @@ export default function Home() {
 
 		<Script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js" strategy="beforeInteractive"/>
 		<Script src="https://unpkg.com/@metamask/detect-provider/dist/detect-provider.min.js" strategy="beforeInteractive" />
+		<Script src="/init_app.js" strategy="beforeInteractive" />
 		<Script type="module" strategy="afterInteractive" src="/connect_wallet.js" />
 
 		<div>
+			<div id="error" className="alert bg-base-100 hidden">
+				<div className="flex-1">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-6 h-6 mx-2" stroke="#ff5722">    
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path>                      
+					</svg> 
+
+					<label className="mb-0 -mt-0.5 text-xl">Generic Error</label>
+				</div>
+			</div>
+
+			<div id="contractNotApproved" className="hidden flex-col items-center w-full">
+				<div id="error" className="alert bg-base-100">
+					<div className="flex-1">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-6 h-6 mx-2" stroke="#ff5722">    
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path>                      
+						</svg> 
+
+						<label className="mb-0 -mt-0.5 text-xl">You need to allow the staking contract to manage your tokens!</label>
+					</div>
+				</div>
+
+				<button className="btn w-full mt-2" onClick={AllowStakingApproval}>Allow</button>
+			</div>
+
 			<Script strategy="afterInteractive" src="/staked_tokens.js"/>
 
 			<svg width="20" height="20" fill="currentColor" className="mr-2 animate-spin" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" id="loading">
