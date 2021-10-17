@@ -1,5 +1,36 @@
 import Script from 'next/script'
 
+const ClaimRewards = async () => {
+	let staked_tokens_encoded = await CallContractFunction(CONTRACT_STAKE_ADDR, {
+		interface: {
+			name: 'depositsOf',
+			type: 'function',
+			inputs: [
+				{
+					type: "address",
+					name: "account"
+				}
+			]
+		},
+		parameters: [ethereum.selectedAddress]
+	});
+	let staked_tokens = web3.eth.abi.decodeParameter("uint256[]", staked_tokens_encoded);
+
+	let txHash = await CreateTransaction(CONTRACT_STAKE_ADDR, '0x00', {
+		interface: {
+			name: 'claimRewards',
+			type: 'function',
+			inputs: [
+				{
+					type: "uint256[]",
+					name: "tokenIds"
+				},
+			]
+		},
+		parameters: [staked_tokens]
+	});
+}
+
 export default function StakingStats()
 {
 	return (
@@ -22,7 +53,7 @@ export default function StakingStats()
 
 				<div className="stat place-items-center">
 					<div className="btn-group">
-						<button id="claimTokens" className="btn btn-outline btn-lg w-32">
+						<button id="claimTokens" className="btn btn-outline btn-lg w-32" onClick={ClaimRewards}>
 							Claim
 						</button>
 

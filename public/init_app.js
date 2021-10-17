@@ -25,7 +25,38 @@ function CallContractFunction(_address, _data)
 				resolve(_data);
 			})
 			.catch(err => {
-				alert(err);
+				alert(err.message);
+				reject(err);
+			});
+	});
+
+	return _promise;
+}
+
+function CreateTransaction(_address, _value, _data)
+{
+	let _promise = new Promise((resolve, reject) => {
+		let _payload = web3.eth.abi.encodeFunctionCall(_data.interface, _data.parameters);
+
+		let _requestData = {
+			method: "eth_sendTransaction",
+			params: [
+				{
+					from: ethereum.selectedAddress,
+					to: _address,
+					value: _value,
+					data: _payload,
+				},
+				"latest"
+			]
+		};
+
+		ethereum.request(_requestData)
+			.then((_data) => {
+				resolve(_data);
+			})
+			.catch(err => {
+				alert(err.message);
 				reject(err);
 			});
 	});

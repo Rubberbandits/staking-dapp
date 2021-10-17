@@ -21,11 +21,8 @@ async function DisplayStakingApp(account)
 	let is_approved = web3.eth.abi.decodeParameter("bool", is_approved_encoded);
 	if (is_approved !== true) 
 	{
-		var contractNotApproved = document.getElementById("contractNotApproved");
-		contractNotApproved.style.display = "flex";
-
-		var connectButton = document.getElementById("connectWallet");
-		connectButton.style.display = "none";
+		let needsContractApproval = new CustomEvent("needsContractApproval", {detail: {account: account, is_approved: is_approved}});
+		window.dispatchEvent(needsContractApproval);
 	} else {
 		var connectButton = document.getElementById("connectWallet");
 		connectButton.style.display = "none";
