@@ -98,7 +98,11 @@ const CreateTokenDisplays = () => {
 
 		let tokenList = document.getElementById("tokenList");
 		tokenList.classList.remove("justify-center");
-		tokenList.querySelector("#loading").classList.add("hidden")
+
+		let loading = tokenList.querySelector("#loading");
+		if (loading) { 
+			loading.classList.add("hidden");
+		}
 
 		ReactDOM.render(
 			<> 
