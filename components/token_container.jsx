@@ -117,7 +117,7 @@ const GetSelectedTokens = () => {
 	let selected_tokens = [];
 
 	tokenList.childNodes.forEach(el => {
-		let selected = el.querySelector("#select").classList.contains("btn-accent");
+		let selected = el.querySelector("#select").classList.contains("bg-white");
 		if (!selected) return
 
 		selected_tokens.push(el);
