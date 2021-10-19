@@ -3,7 +3,9 @@ import Image from 'next/image'
 
 const ToggleSelect = (e) => {
 	var btn = e.target;
-	btn.classList.toggle("btn-accent");
+	btn.classList.toggle("bg-white");
+	btn.classList.toggle("text-black");
+	btn.innerText = btn.classList.contains("bg-white") && "Selected" || "Select";
 }
 
 export default function TokenDisplay({tokenID, isStaked, imagePath})
@@ -20,7 +22,7 @@ export default function TokenDisplay({tokenID, isStaked, imagePath})
 					<h5 id="isStaked" className="text-neutral">{isStaked && "Staked" || "Not staked"}</h5>
 				</div>
 
-				<button id="select" className="btn btn-md self-center" onClick={ToggleSelect}>
+				<button id="select" className="btn btn-md self-center w-24" onClick={ToggleSelect}>
 					Select
 				</button>
 			</div>
