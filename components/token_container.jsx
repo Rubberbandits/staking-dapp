@@ -47,7 +47,7 @@ const GetAllTokens = async (account) => {
 	}
 
 	let owned_tokens = [];
-	Promise.allSettled(promises)
+	await Promise.allSettled(promises)
 		.then(results => {
 			results.forEach(result => owned_tokens.push(web3.eth.abi.decodeParameter("uint256", result.value)))
 		})
