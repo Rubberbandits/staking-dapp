@@ -75,7 +75,7 @@ export default function Home() {
 				{process.browser && DetectContractApproval()}
 
 				<div id="connectWallet" className="hidden">
-					<Image width="500" height="500" src="/dimwit.png"/>
+					<Image width="500" height="500" src="/dwlogo.png"/>
 					<ConnectWallet />
 				</div>
 

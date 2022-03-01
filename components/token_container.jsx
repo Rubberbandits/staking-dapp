@@ -10,18 +10,47 @@ const GetAllTokens = async (account) => {
 
 	let owned_tokens_encoded = await CallContractFunction(CONTRACT_NFT_ADDR, {
 		interface: {
-			name: 'walletOfOwner',
+			name: 'balanceOf',
 			type: 'function',
 			inputs: [
 				{
 					type: "address",
-					name: "_owner"
+					name: "owner"
 				}
 			]
 		},
 		parameters: [account]
 	});
-	let owned_tokens = web3.eth.abi.decodeParameter("uint256[]", owned_tokens_encoded);
+	let owned_tokenCount = web3.eth.abi.decodeParameter("uint256", owned_tokens_encoded);
+
+	let promises = [];
+	for (let i = 0; i < owned_tokenCount; i++) {
+		promises.push(
+			CallContractFunction(CONTRACT_NFT_ADDR, {
+				interface: {
+					name: 'tokenOfOwnerByIndex',
+					type: 'function',
+					inputs: [
+						{
+							type: "address",
+							name: "owner"
+						},
+						{
+							type: "uint256",
+							name: "index"
+						}
+					]
+				},
+				parameters: [account]
+			})
+		);
+	}
+
+	let owned_tokens = [];
+	Promise.allSettled(promises)
+		.then(results => {
+			results.forEach(result => owned_tokens.push(web3.eth.abi.decodeParameter("uint256", result.value)))
+		})
 
 	let staked_tokens_encoded = await CallContractFunction(CONTRACT_STAKE_ADDR, {
 		interface: {
