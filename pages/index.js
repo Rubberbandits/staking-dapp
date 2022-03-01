@@ -53,7 +53,7 @@ export default function Home() {
   	return (
 		<div className="flex flex-col items-center justify-center min-h-screen py-2">
 			<Head>
-				<title>Nautilus Staking</title>
+				<title>DimWits Staking</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
@@ -75,7 +75,7 @@ export default function Home() {
 				{process.browser && DetectContractApproval()}
 
 				<div id="connectWallet" className="hidden">
-					<Image width="500" height="500" src="/wgmi-p-500.png"/>
+					<Image width="500" height="500" src="/dimwit.png"/>
 					<ConnectWallet />
 				</div>
 

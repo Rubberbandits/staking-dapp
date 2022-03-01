@@ -43,11 +43,11 @@ export default function StakingStats()
 					<div id="stakedTokens" className="stat-value">0</div>
 				</div> 
 				<div data-tip="This is an estimation assuming 6600 blocks mined per day." className="stat place-items-center place-content-center tooltip">
-					<div className="stat-title">Estimated $PYRAMID/day</div> 
+					<div className="stat-title">Estimated $DIM/day</div> 
 					<div id="dailyRate" className="stat-value">0</div> 
 				</div> 
 				<div className="stat place-items-center place-content-center">
-					<div className="stat-title">Unclaimed $PYRAMID</div> 
+					<div className="stat-title">Unclaimed $DIM</div> 
 					<div id="waitingReward" className="stat-value">0</div> 
 				</div>
 

@@ -1,5 +1,5 @@
 const CONTRACT_STAKE_ADDR = "0x5435450adcedcbf56fd5934c97b522da284ef7e8";
-const CONTRACT_NFT_ADDR = "0xdb799f575b9B0f07bd3bfd121b43732d120E7954";
+const CONTRACT_NFT_ADDR = "0x1a4C4B22fA54b65A0BCE5F4eA4a33378c007726E";
 const web3 = new Web3;
 
 function CallContractFunction(_address, _data)

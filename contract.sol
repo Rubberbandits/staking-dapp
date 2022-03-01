@@ -7,16 +7,14 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import '@openzeppelin/contracts/utils/math/Math.sol';
 
-
-contract PyramidCoin is ERC20Burnable, Ownable, IERC721Receiver, ReentrancyGuard {
+contract DimToken is ERC20Burnable, Ownable, IERC721Receiver {
     using EnumerableSet for EnumerableSet.UintSet; 
     
     //addresses 
     address nullAddress = 0x0000000000000000000000000000000000000000;
-    address public ntlsAddress;
+    address public dimAddress;
 
     //uint256's 
     uint256 public expiration; 
@@ -27,12 +25,12 @@ contract PyramidCoin is ERC20Burnable, Ownable, IERC721Receiver, ReentrancyGuard
     mapping(address => mapping(uint256 => uint256)) public _depositBlocks;
 
     constructor(
-      address _ntls,
+      address _dim,
       uint256 _rate,
       uint256 _expiration
-    ) ERC20("Pyramid", "PYRAMID") 
+    ) ERC20("DimToken", "DIM") 
     {
-        ntlsAddress = _ntls; 
+        dimAddress = _dim; 
         rate = _rate;
         expiration = block.number + _expiration;
     }

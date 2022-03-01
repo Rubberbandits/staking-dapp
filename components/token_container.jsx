@@ -76,7 +76,7 @@ const GetAllTokens = async (account) => {
 				tokens.push({
 					tokenID: tokenID,
 					isStaked: staked_tokens.includes(tokenID),
-					image: "/default.gif"
+					image: "/default.png"
 				})
 				
 				console.log("Uh oh, can't fetch token image! "+ tokenID);
