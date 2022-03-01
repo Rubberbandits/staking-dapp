@@ -41,7 +41,7 @@ const GetAllTokens = async (account) => {
 						}
 					]
 				},
-				parameters: [account]
+				parameters: [account, i]
 			})
 		);
 	}
