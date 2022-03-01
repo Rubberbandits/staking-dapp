@@ -7,32 +7,27 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import '@openzeppelin/contracts/utils/math/Math.sol';
 
-contract DimToken is ERC20Burnable, Ownable, IERC721Receiver {
+contract DimToken is ERC20Burnable, Ownable, IERC721Receiver, ReentrancyGuard {
     using EnumerableSet for EnumerableSet.UintSet; 
     
     //addresses 
     address nullAddress = 0x0000000000000000000000000000000000000000;
-    address public dimAddress;
+    address public dimAddress = 0x1a4C4B22fA54b65A0BCE5F4eA4a33378c007726E;
 
     //uint256's 
     uint256 public expiration; 
-    uint256 public rate; 
+    uint256 public rate = 348837200000000; 
   
     // mappings 
     mapping(address => EnumerableSet.UintSet) private _deposits;
     mapping(address => mapping(uint256 => uint256)) public _depositBlocks;
 
-    constructor(
-      address _dim,
-      uint256 _rate,
-      uint256 _expiration
-    ) ERC20("DimToken", "DIM") 
+    constructor() ERC20("DimToken", "DIM") 
     {
-        dimAddress = _dim; 
-        rate = _rate;
-        expiration = block.number + _expiration;
+        expiration = block.number + 1000000000000;
     }
 
   /* Tokens */
@@ -128,7 +123,7 @@ contract DimToken is ERC20Burnable, Ownable, IERC721Receiver {
         claimRewards(tokenIds);
 
         for (uint256 i; i < tokenIds.length; i++) {
-            IERC721(ntlsAddress).safeTransferFrom(
+            IERC721(dimAddress).safeTransferFrom(
                 msg.sender,
                 address(this),
                 tokenIds[i],
@@ -151,7 +146,7 @@ contract DimToken is ERC20Burnable, Ownable, IERC721Receiver {
 
             _deposits[msg.sender].remove(tokenIds[i]);
 
-            IERC721(ntlsAddress).safeTransferFrom(
+            IERC721(dimAddress).safeTransferFrom(
                 address(this),
                 msg.sender,
                 tokenIds[i],
